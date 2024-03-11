@@ -56,7 +56,7 @@ func main() {
 		}
 	}
 
-	wixVersion := fmt.Sprintf("1.%d.%d.%d", now.Year() / 100, now.Year() % 100 * 400 + now.YearDay(), now.Hour()*60+now.Minute())
+	wixVersion := fmt.Sprintf("1.%d.%d.%d", now.Year()/100, now.Year()%100*400+now.YearDay(), now.Hour()*60+now.Minute())
 	fmt.Println("wixVersion:", wixVersion)
 
 	signtool = searchSignTool()
@@ -66,7 +66,7 @@ func main() {
 	}
 	fmt.Println("signtool path:", signtool)
 
-	os.MkdirAll(output, 0755)
+	os.MkdirAll("output", 0755)
 
 	for _, arch := range archs {
 		progName := fmt.Sprintf("litermc-certificate-installer-%s", arch)
