@@ -66,6 +66,8 @@ func main() {
 	}
 	fmt.Println("signtool path:", signtool)
 
+	os.MkdirAll(output, 0755)
+
 	for _, arch := range archs {
 		progName := fmt.Sprintf("litermc-certificate-installer-%s", arch)
 		wixDir, err := installWix(arch)
