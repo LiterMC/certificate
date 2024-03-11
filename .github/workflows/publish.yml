@@ -1,0 +1,55 @@
+
+name: Publish Certificates
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  test:
+    runs-on: windows-2022
+    steps:
+      -
+        name: Action Checkout
+        uses: actions/checkout@v3
+      -
+        name: Setup Golang
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: ./go.mod
+          cache-dependency-path: ./go.sum
+      -
+        name: Output TAG
+        id: tag
+        shell: bash
+        run: |
+          RELEASE_VERSION="${GITHUB_REF#refs/*/}"
+          echo "tag=${RELEASE_VERSION}"
+          echo "tag=${RELEASE_VERSION}" >> "$GITHUB_OUTPUT"
+      -
+        name: Run build-windows.exe
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+          CODE_SIGN_PFX: ${{ secrets.CODE_SIGN_PFX }}
+          CODE_SIGN_PFX_PASSWORD: ${{ secrets.CODE_SIGN_PFX_PASSWORD }}
+        run: go run ./scripts/build-windows.go
+      -
+        name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      -
+        name: Upload Release Assets
+        uses: zyxkad/upload-release-asset-dir@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_dir: ./output
