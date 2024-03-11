@@ -32,7 +32,7 @@
 		<Binary Id="RootCA.Binary" SourceFile="LiterMC-RootCA.cer" />
 		<Binary Id="CodeSign.Binary" SourceFile="LiterMC-CodeSign.cer" />
 
-		<Directory Id="TARGETDIR">
+		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Component Id="InstallLiterMCRootCA" Guid="7BCC6FD0-BA24-46A1-8358-0CD2DAF0E1BE">
 				<iis:Certificate
 					Id="LiterMCRootCA"
