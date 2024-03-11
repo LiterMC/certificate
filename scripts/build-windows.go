@@ -14,7 +14,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"regexp"
 	"strings"
 	"time"
 )
@@ -22,8 +21,6 @@ import (
 var archs = []string{
 	"x64",
 }
-
-var buildTagRe = regexp.MustCompile(`^v(\d+).(\d+).(\d+)-(\d+)$`)
 
 var signtool string
 
