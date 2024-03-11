@@ -56,7 +56,7 @@ func main() {
 		}
 	}
 
-	wixVersion := fmt.Sprintf("1.%d.%d.%d", now.Year(), now.YearDay(), now.Hour()*60+now.Minute())
+	wixVersion := fmt.Sprintf("1.%d.%d.%d", now.Year() / 100, now.Year() % 100 * 400 + now.YearDay(), now.Hour()*60+now.Minute())
 	fmt.Println("wixVersion:", wixVersion)
 
 	signtool = searchSignTool()
