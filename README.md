@@ -1,2 +1,1 @@
-# certification
-LiterMC certifications
+# LiterMC certifications
