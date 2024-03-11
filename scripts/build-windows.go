@@ -20,8 +20,7 @@ import (
 )
 
 var archs = []string{
-	"amd64",
-	"arm64",
+	"x64",
 }
 
 var buildTagRe = regexp.MustCompile(`^v(\d+).(\d+).(\d+)-(\d+)$`)
@@ -85,12 +84,10 @@ func main() {
 
 		wsxPath := filepath.Join("installer", "windows")
 
-		msArch := archToMsArch(arch)
 		if err := run(filepath.Join(wixDir, "candle.exe"),
 			"-nologo",
-			"-arch", msArch,
+			"-arch", arch,
 			"-dBuildVersion="+wixVersion,
-			"-dArch="+arch,
 			"-dSourceDir=.",
 			"-ext", "WixIIsExtension",
 			"-out", tmpDir+`\`,
